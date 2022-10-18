@@ -117,19 +117,18 @@ if file is not None:
                     st.write(preview_message)
 
             if index < preview_length:
-                st.write(f'''{segment['id'] + 1}\n{start_time} --> {end_time}\n{text}''')
+                st.text(f'''{segment['id'] + 1}\n{start_time} --> {end_time}\n{text}''')
 
         @st.cache(allow_output_mutation=True, show_spinner=True, ttl=600)
         def cache_transcript(text):
             # Cache the transcript to prevent re-computation on every rerun
-            return text
-        
+            return text        
         transcript_as_srt = cache_transcript(transcript_text)
 
         # Display a file download button to download completed transcript
         st.download_button(
             label='Download transcript',
             data=transcript_as_srt,
-            # file_name=Path(file.name).with_suffix('.srt'),
+            file_name=str(Path(file.name).with_suffix('.srt')),
             mime='text/srt'
             )
