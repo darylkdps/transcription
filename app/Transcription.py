@@ -141,3 +141,4 @@ if file is not None:
             file_name=str(Path(file.name).with_suffix('.srt')),
             mime='text/srt'
             )
+    del file
