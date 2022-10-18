@@ -39,16 +39,24 @@ performance_options = {
     'More Accurate': 'large',
     }
 
+performance_description = {
+    'Faster': ' (audio duration / 2)',
+    'Fast': ' (audio duration)',
+    'Balanced': ' (audio duration x 2)',
+    'Accurate': '',
+    'More Accurate': ' ',
+    }
+
 # Set default Whisper model size
 model_size = performance_options['Fast']
 
 # Display radio box
 performance = st.radio(
-    'Select performance:',
+    'Select performance: (approximate processing time in brackets)',
     options=('Faster', 'Fast', 'Balanced'),
     index=1,
     key='per_radio_input',
-    format_func=lambda label: label,
+    format_func=lambda label: label + performance_description[label],
     disabled=False,
     horizontal=False,
     label_visibility='visible'  # visible, hidden, collapsed
