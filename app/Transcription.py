@@ -119,7 +119,7 @@ if file is not None:
             if index < preview_length:
                 st.text(f'''{segment['id'] + 1}\n{start_time} --> {end_time}\n{text}''')
 
-        @st.cache(allow_output_mutation=True, show_spinner=True, ttl=600)
+        @st.cache(allow_output_mutation=False, show_spinner=False, ttl=600)
         def cache_transcript(text):
             # Cache the transcript to prevent re-computation on every rerun
             return text        
@@ -132,3 +132,4 @@ if file is not None:
             file_name=str(Path(file.name).with_suffix('.srt')),
             mime='text/srt'
             )
+        file = None
