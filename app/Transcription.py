@@ -23,12 +23,28 @@ st.title(
     )
 
 # Display instructions
-st.write(
-    '''This web application uses Open AI's _Whisper_ to automatically transcribe or translate
-    audio recordings. _Whisper_ offers five levels of speed-accuracy performance: 1. Faster,
-    2. Fast, 3. Balanced, 4. Accurate, and 5. More Accurate. Due to memory and computation
-    limitations, I have limited its use to performance levels that will not crash this
-    application. Contact me if you want better accuracy.''')
+st.markdown(
+    '''
+    This web application uses Open AI's _Whisper_ to automatically transcribe or translate
+    audio recordings. _Whisper_ is a neural network (i.e., very very big) based automatic
+    speech recognition system. It offers five levels of speed-accuracy performance:
+    - Faster
+    - Fast
+    - Balanced
+    - Accurate
+    - More Accurate
+    
+    I am using a free Streamlit plan. The plan provides very limited memory so only the models
+    with small memory footprint can be loaded. Exceeding the memory allocated will crash this
+    application so I have limited the models that can be used.
+
+    __Do not use with audio recordings over 30 mins. There will not be enough memory.__ 
+    Contact me if you want better accuracy or have audios with longer duration.
+    
+    
+
+
+    ''')
 
 # Map selections to Whisper models
 performance_options = {
