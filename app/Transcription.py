@@ -53,6 +53,18 @@ performance = st.radio(
     label_visibility='visible'  # visible, hidden, collapsed
     )
 
+# Display disabled radio box
+performance_disabled = st.radio(
+    '',
+    options=('Balanced', 'Accurate', 'More Accurate'),
+    index=1,
+    key='per_radio_input_disabled',
+    format_func=lambda label: label,
+    disabled=True,
+    horizontal=False,
+    label_visibility='hidden'  # visible, hidden, collapsed
+    )
+
 # Display a placeholder for diagnostics messages
 placeholder = st.empty()
 with placeholder.container():
@@ -119,7 +131,7 @@ if file is not None:
             if index < preview_length:
                 st.text(f'''{segment['id'] + 1}\n{start_time} --> {end_time}\n{text}''')
 
-        @st.cache(allow_output_mutation=False, show_spinner=False, ttl=600)
+        @st.cache(allow_output_mutation=True, show_spinner=False, ttl=600)
         def cache_transcript(text):
             # Cache the transcript to prevent re-computation on every rerun
             return text        
