@@ -25,9 +25,10 @@ st.title(
 # Display instructions
 st.write(
     '''This web application uses Open AI's _Whisper_ to automatically transcribe or translate
-    audio recordings. _Whisper_ offers five levels of speed-accuracy performance. Due to
-    memory and computation limitations, I have limited its use to performance levels that will
-    not crash this application. Contact me if you want better accuracy.''')
+    audio recordings. _Whisper_ offers five levels of speed-accuracy performance: 1) Faster,
+    2) Fast, 3) Balanced, 4) Accurate, and 5) More Accurate. Due to memory and computation
+    limitations, I have limited its use to performance levels that will not crash this
+    application. Contact me if you want better accuracy.''')
 
 # Map selections to Whisper models
 performance_options = {
