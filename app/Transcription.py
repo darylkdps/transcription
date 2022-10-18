@@ -45,7 +45,7 @@ model_size = performance_options['Fast']
 # Display radio box
 performance = st.radio(
     'Select performance:',
-    options=('Faster', 'Fast'),
+    options=('Faster', 'Fast', 'Balanced'),
     index=1,
     key='per_radio_input',
     format_func=lambda label: label,
@@ -61,7 +61,7 @@ with placeholder.container():
     # st.write(model_size)
 
 # Display a file uploader
-file = st.file_uploader('\n\nUpload an audio file', type=['mp3', 'aac', 'wav'])
+file = st.file_uploader('Upload an audio file', type=['mp3', 'aac', 'wav'])
 if file is not None:
     # Get file extension
     file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
