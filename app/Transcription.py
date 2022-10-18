@@ -87,6 +87,9 @@ if file is not None:
         # Extract transcript from segments
         preview_length = 5
         transcript_text = ''
+
+        transcript_preview_placeholder = st.empty()        
+
         for index, segment in enumerate(result['segments']):
             start_time_delta = timedelta(seconds=int(segment['start']))  # timedelta attributes: days, seconds, microseconds
             end_time_delta = timedelta(seconds=int(segment['end']))  # timedelta attributes: days, seconds, microseconds
@@ -107,9 +110,14 @@ if file is not None:
 
             transcript_text = transcript_text + '\n\n' if transcript_text != '' else transcript_text
             transcript_text = transcript_text + segment_id + segment_start_time + segment_end_time
+            
+            preview_message = f'Previewing first {preview_length} segments of transcript.'
+            if transcript_preview_placeholder.text != preview_message:
+                with transcript_preview_placeholder.container():
+                    st.write(preview_message)
 
             if index < preview_length:
-                st.write(segment_id)
+                st.write(f''''''segment_id)
                 st.write(segment_start_time)
                 st.write(segment_end_time)
 
@@ -124,6 +132,6 @@ if file is not None:
         st.download_button(
             label='Download transcript',
             data=transcript_as_srt,
-            file_name=Path(file.name).with_suffix('.srt'),
+            # file_name=Path(file.name).with_suffix('.srt'),
             mime='text/srt'
             )
