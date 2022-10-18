@@ -53,7 +53,7 @@ model_size = performance_options['Fast']
 # Display radio box
 performance = st.radio(
     'Select performance: (approximate processing time in brackets)',
-    options=('Faster', 'Fast', 'Balanced'),
+    options=('Faster', 'Fast'),
     index=1,
     key='per_radio_input',
     format_func=lambda label: label + performance_description[label],
