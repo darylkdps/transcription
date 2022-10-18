@@ -73,67 +73,57 @@ if file is not None:
         # Display an audio player
         st.audio(tempFile.read(), format='audio/' + file_extension, start_time=0)
 
+        # Load whisper model and transcribe
+        DEVICE = 'cpu'  # 'cuda' if torch.cuda.is_available() else 'cpu'
+        transcribe_message = f'No GPU acceleration, transcribing using CPU ...' if DEVICE == 'cpu' else f'Transcribing using GPU ...'
+        with st.spinner(transcribe_message):
+            model = pywhisper.load_model(model_size, device=DEVICE)
+            result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False)
+            del model
+        
+        # Display 'success' status
+        st.success('Transcribed.')
+
+        # Extract transcript from segments
+        preview_length = 5
+        transcript_text = ''
+        for index, segment in enumerate(result['segments']):
+            start_time_delta = timedelta(seconds=int(segment['start']))  # timedelta attributes: days, seconds, microseconds
+            end_time_delta = timedelta(seconds=int(segment['end']))  # timedelta attributes: days, seconds, microseconds
+
+            start_hour0 = '0' if segment['start'] < (10 * 60 * 60) else ''  # Append '0' if less than 10 hours
+            end_hour0 = '0' if segment['end'] < (10 * 60 * 60) else ''  # Append '0' if less than 10 hours
+
+            start_milliseconds = int((segment['start'] % 1) * 1000)
+            end_milliseconds = int((segment['start'] % 1) * 1000)
+
+            start_time = start_hour0 + str(start_time_delta) + ',' + f'{start_milliseconds:03d}'
+            end_time = end_hour0 + str(end_time_delta) + ',' + f'{end_milliseconds:03d}'
+            text = segment['text'][1:] if segment['text'][0] == ' ' else segment['text']
+
+            segment_id = f"{segment['id'] + 1}\n"
+            segment_start_time = f"{start_time} --> {end_time}\n"
+            segment_end_time = f"{text}"
+
+            transcript_text = transcript_text + '\n\n' if transcript_text != '' else transcript_text
+            transcript_text = transcript_text + segment_id + segment_start_time + segment_end_time
+
+            if index < preview_length:
+                st.write(segment_id)
+                st.write(segment_start_time)
+                st.write(segment_end_time)
+
+        @st.cache(allow_output_mutation=True, show_spinner=True, ttl=600)
+        def cache_transcript(text):
+            # Cache the transcript to prevent re-computation on every rerun
+            return text
+        
+        transcript_as_srt = cache_transcript(transcript_text)
+
+        # Display a file download button to download completed transcript
         st.download_button(
-            label='download audio',
-            data=tempFile,
-            file_name=file.name,
-            mime='audio/wav'
+            label='Download transcript',
+            data=transcript_as_srt,
+            file_name=Path(file.name).with_suffix('.srt'),
+            mime='text/srt'
             )
-
-        # # Load whisper model and transcribe
-        # DEVICE = 'cpu'  # 'cuda' if torch.cuda.is_available() else 'cpu'
-        # transcribe_message = f'No GPU acceleration, transcribing using CPU ...' if DEVICE == 'cpu' else f'Transcribing using GPU ...'
-        # with st.spinner(transcribe_message):
-        #     model = pywhisper.load_model(model_size, device=DEVICE)
-        #     result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False)
-        #     del model
-        
-        # # Display 'success' status
-        # st.success('Transcribed.')
-
-        # # Extract transcript from segments
-        # preview_length = 5
-        # transcript_text = ''
-        # for index, segment in enumerate(result['segments']):
-        #     start_time_delta = timedelta(seconds=int(segment['start']))  # timedelta attributes: days, seconds, microseconds
-        #     end_time_delta = timedelta(seconds=int(segment['end']))  # timedelta attributes: days, seconds, microseconds
-
-        #     start_hour0 = '0' if segment['start'] < (10 * 60 * 60) else ''  # Append '0' if less than 10 hours
-        #     end_hour0 = '0' if segment['end'] < (10 * 60 * 60) else ''  # Append '0' if less than 10 hours
-
-        #     start_milliseconds = int((segment['start'] % 1) * 1000)
-        #     end_milliseconds = int((segment['start'] % 1) * 1000)
-
-        #     start_time = start_hour0 + str(start_time_delta) + ',' + f'{start_milliseconds:03d}'
-        #     end_time = end_hour0 + str(end_time_delta) + ',' + f'{end_milliseconds:03d}'
-        #     text = segment['text'][1:] if segment['text'][0] == ' ' else segment['text']
-
-        #     segment_id = f"{segment['id'] + 1}\n"
-        #     segment_start_time = f"{start_time} --> {end_time}\n"
-        #     segment_end_time = f"{text}"
-
-        #     transcript_text = transcript_text + '\n\n' if transcript_text != '' else transcript_text
-        #     transcript_text = transcript_text + segment_id + segment_start_time + segment_end_time
-
-        #     if index < preview_length:
-        #         st.write(segment_id)
-        #         st.write(segment_start_time)
-        #         st.write(segment_end_time)
-
-        # # with open(Path(file.name).with_suffix('.srt'), mode='w', encoding='utf-8') as srt_file:
-        # #     srt_file.write(transcript_text)
-        
-        # @st.cache
-        # def cache_transcript(text):
-        #     # Cache the transcript to prevent re-computation on every rerun
-        #     return text
-        
-        # transcript_as_srt = cache_transcript(transcript_text)
-
-        # # Display a file download button to download completed transcript
-        # st.download_button(
-        #     label='Download transcript',
-        #     data=transcript_as_srt,
-        #     file_name=Path(file.name).with_suffix('.srt'),
-        #     mime='text/srt'
-        #     )
