@@ -117,9 +117,7 @@ if file is not None:
                     st.write(preview_message)
 
             if index < preview_length:
-                st.write(f''''''segment_id)
-                st.write(segment_start_time)
-                st.write(segment_end_time)
+                st.write(f'''{segment['id'] + 1}\n{start_time} --> {end_time}\n{text}''')
 
         @st.cache(allow_output_mutation=True, show_spinner=True, ttl=600)
         def cache_transcript(text):
