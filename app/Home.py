@@ -35,10 +35,10 @@ st.markdown(
     - Accurate
     - More Accurate
     
-    I am using a free Streamlit plan. The plan provides very limited memory so only the models
-    with small memory footprint can be loaded. Exceeding the memory allocated will crash this
-    application so I have limited the models and the size of the audio and video files that
-    can be used.
+    I am using a free Streamlit plan to host this web application. The plan provides very
+    limited memory so only the models with small memory footprint can be loaded. Exceeding the
+    memory allocated will crash this application so I have limited the models and the size of
+    the audio and video files that can be used.
 
     __Do not use with audio or video files over 30 mins in duration.__ I have not tested if it
     will crash. Contact me if you want better accuracy or have files with longer duration.
