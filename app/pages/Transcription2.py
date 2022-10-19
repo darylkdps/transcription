@@ -113,7 +113,7 @@ def test_cache(file, model_size):
         # Extract transcript from segments
         preview_length = 5
         transcript_text = ''
-
+        
         transcript_preview_placeholder = st.empty()        
 
         for index, segment in enumerate(result['segments']):
@@ -143,16 +143,18 @@ def test_cache(file, model_size):
                     st.text(preview_message)
 
             if index < preview_length:
+                transcript_text_preview = transcript_text
                 st.text(f'''{segment['id'] + 1}\n{start_time} --> {end_time}\n{text}''')
 
-        return file, transcript_text
+        return file, transcript_text, transcript_text_preview
     else:
-        return None, None
+        return None, None, None
 
-audio, transcript_text = test_cache(file, model_size)
+audio, transcript_text, transcript_text_preview = test_cache(file, model_size)
 
 if file is not None:
     # Display a file download button to download completed transcript
+    st.text(transcript_text_preview)
     st.download_button(
         label='Download transcript',
         data=transcript_text,
