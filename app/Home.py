@@ -12,7 +12,8 @@ st.set_page_config(
     initial_sidebar_state='collapsed',
     menu_items={
         'About': '''This is developed by Daryl Ku (Research Associate), Academic Quality Unit,
-        Office of Strategic Planning and Academic Quality (SPAQ), NIE''',
+        Office of Strategic Planning and Academic Quality (SPAQ), National Institute of
+        Education, Singapore.''',
         'Report a Bug': None,
         'Get help': None
         }
