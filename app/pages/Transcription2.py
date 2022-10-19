@@ -151,8 +151,6 @@ if file is not None and transcript_text != '':
     st.text(transcript_text_preview)
     
     # Display a file download button to download completed transcript
-    st.success('Transcribed.') 
-    st.text(transcript_text_preview)
     st.download_button(
         label='Download transcript',
         data=transcript_text,
