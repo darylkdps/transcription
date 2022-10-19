@@ -27,7 +27,7 @@ st.title(
 # Display instructions
 st.markdown(
     '''
-    This web application uses Open AI's _Whisper_ to automatically transcribe or translate
+    This web application uses Open AI's _Whisper_ to automatically transcribe or translate (WIP)
     speech. _Whisper_ is a neural network based automatic speech recognition system. It offers
     five levels of speed-accuracy performance:
     - Faster
@@ -76,6 +76,9 @@ performance_description = {
 # Set default Whisper model size
 model_size = performance_options['Fast']
 
+# Set session state
+st.session_state['radio_perf_disabled'] = False
+
 # Display radio box
 max_len_perf_opt = max(list(map(len, performance_options.keys())))
 max_len_perf_desc = max(list(map(len, performance_description.values())))
@@ -85,7 +88,7 @@ performance = st.radio(
     index=1,
     key='per_radio_input',
     format_func=lambda label: label.ljust(max_len_perf_opt) + performance_description[label],  # padding does not work here
-    disabled=False,
+    disabled=st.session_state['radio_perf_disabled'],
     horizontal=False,
     label_visibility='visible'  # visible, hidden, collapsed
     )
@@ -156,6 +159,8 @@ def test_cache(file, model_size):
 
             if index < preview_length:
                 transcript_text_preview = transcript_text
+            
+        st.session_state['radio_perf_disabled'] = True
 
         return file, transcript_text, transcript_text_preview
     else:
@@ -180,6 +185,3 @@ if file is not None and transcript_text != '':
         mime='text/srt'
         )
     st.caption('Transcript is formatted in the subtitle format. Can be opened using any text editor.', unsafe_allow_html=False)
-
-    # Disable radio
-    performance.disabled = True
