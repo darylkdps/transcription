@@ -154,6 +154,7 @@ audio, transcript_text, transcript_text_preview = test_cache(file, model_size)
 
 if file is not None:
     # Display a file download button to download completed transcript
+    st.success('Transcribed.') 
     st.text(transcript_text_preview)
     st.download_button(
         label='Download transcript',
