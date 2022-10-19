@@ -162,8 +162,9 @@ if file is not None and transcript_text != '':
     
     # Display a file download button to download completed transcript
     st.download_button(
-        label='Download transcript',
+        label='Download Transcript',
         data=transcript_text,
         file_name=str(Path(file.name).with_suffix('.srt')),
         mime='text/srt'
         )
+    st.caption('Transcript is formatted in the subtitle format. Can be opened using any text editor.', unsafe_allow_html=False)
