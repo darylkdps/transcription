@@ -43,6 +43,9 @@ st.markdown(
     Contact me if you want better accuracy or have audio files with longer duration.
     ''')
 
+# Set transcription preview length in segments 
+preview_length = 5
+
 # Map selections to Whisper models
 performance_options = {
     'Faster': 'tiny',
@@ -75,8 +78,6 @@ performance = st.radio(
     label_visibility='visible'  # visible, hidden, collapsed
     )
 
-st.radio('test', options=(1,2,3))
-
 # Display a placeholder for diagnostics messages
 placeholder = st.empty()
 with placeholder.container():
@@ -86,7 +87,7 @@ with placeholder.container():
 # Display a file uploader
 file = st.file_uploader('Upload an audio file', type=['mp3', 'aac', 'wav'])
 
-@st.cache(allow_output_mutation=True, show_spinner=True, suppress_st_warning=True, ttl=600)
+@st.cache(allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=600)
 def test_cache(file, model_size):
     if file is not None:
         # Print diagnostics message
@@ -106,16 +107,11 @@ def test_cache(file, model_size):
             with st.spinner(transcribe_message):
                 model = pywhisper.load_model(model_size, device=DEVICE)
                 result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False)
-            
-        # Display 'success' status
-        st.success('Transcribed.')
 
         # Extract transcript from segments
-        preview_length = 5
         transcript_text = ''
-        
-        transcript_preview_placeholder = st.empty()        
 
+        # Transform transcript into the srt format
         for index, segment in enumerate(result['segments']):
             start_time_delta = timedelta(seconds=int(segment['start']))  # timedelta attributes: days, seconds, microseconds
             end_time_delta = timedelta(seconds=int(segment['end']))  # timedelta attributes: days, seconds, microseconds
@@ -136,15 +132,9 @@ def test_cache(file, model_size):
 
             transcript_text = transcript_text + '\n\n' if transcript_text != '' else transcript_text
             transcript_text = transcript_text + segment_id + segment_start_time + segment_end_time
-            
-            preview_message = f'Previewing first {preview_length} segments of transcript.'
-            if transcript_preview_placeholder.text != preview_message:
-                with transcript_preview_placeholder.container():
-                    st.text(preview_message)
 
             if index < preview_length:
                 transcript_text_preview = transcript_text
-                st.text(f'''{segment['id'] + 1}\n{start_time} --> {end_time}\n{text}''')
 
         return file, transcript_text, transcript_text_preview
     else:
@@ -152,7 +142,14 @@ def test_cache(file, model_size):
 
 audio, transcript_text, transcript_text_preview = test_cache(file, model_size)
 
-if file is not None:
+if file is not None and transcript_text != '':
+    # Display 'success' status
+    st.success('Transcribed.')
+
+    # Display preview of transcript
+    st.text(preview_message)
+    st.text(transcript_text_preview)
+    
     # Display a file download button to download completed transcript
     st.success('Transcribed.') 
     st.text(transcript_text_preview)
