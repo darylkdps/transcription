@@ -7,7 +7,7 @@ def main():
     if 'D:' in str(Path.cwd()) or 'C:' in str(Path.cwd()):
         st.markdown('_No token_')
     else:
-        st.markdown('_' + st.secrets['token'] + '_')
+        st.markdown('_' + str(st.secrets['token']) + '_')
 
 if __name__ == '__main__':
     st.set_page_config(
