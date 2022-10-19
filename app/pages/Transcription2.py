@@ -75,6 +75,8 @@ performance = st.radio(
     label_visibility='visible'  # visible, hidden, collapsed
     )
 
+st.radio('test', options=(1,2,3))
+
 # Display a placeholder for diagnostics messages
 placeholder = st.empty()
 with placeholder.container():
