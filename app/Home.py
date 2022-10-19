@@ -20,15 +20,15 @@ st.set_page_config(
 
 # Display title
 st.title(
-    '''Transcribe or Translate an Audio Recording'''
+    '''Transcribe or Translate Speech'''
     )
 
 # Display instructions
 st.markdown(
     '''
     This web application uses Open AI's _Whisper_ to automatically transcribe or translate
-    audio recordings. _Whisper_ is a neural network based automatic speech recognition
-    system. It offers five levels of speed-accuracy performance:
+    speech. _Whisper_ is a neural network based automatic speech recognition system. It offers
+    five levels of speed-accuracy performance:
     - Faster
     - Fast
     - Balanced
@@ -37,10 +37,11 @@ st.markdown(
     
     I am using a free Streamlit plan. The plan provides very limited memory so only the models
     with small memory footprint can be loaded. Exceeding the memory allocated will crash this
-    application so I have limited the models and the size of the audio files that can be used.
+    application so I have limited the models and the size of the audio and video files that
+    can be used.
 
-    __Do not use with audio recordings over 30 mins.__ I have not tested if it will crash.
-    Contact me if you want better accuracy or have audio files with longer duration.
+    __Do not use with audio or video files over 30 mins in duration.__ I have not tested if it
+    will crash. Contact me if you want better accuracy or have files with longer duration.
     ''')
 
 # Set transcription preview length in segments 
