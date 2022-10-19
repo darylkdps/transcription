@@ -8,7 +8,7 @@ from datetime import timedelta
 st.set_page_config(
     page_title="Daryl's Transcription Web App",
     page_icon='💬',
-    layout='wide',
+    layout='centered',
     initial_sidebar_state='collapsed',
     menu_items={
         'About': 
@@ -38,8 +38,7 @@ st.markdown(
     with small memory footprint can be loaded. Exceeding the memory allocated will crash this
     application so I have limited the models and the size of the audio files that can be used.
 
-    __Do not use with audio recordings over 30 mins.__ I have not tested if it will crash. 
-    
+    __Do not use with audio recordings over 30 mins.__ I have not tested if it will crash.
     Contact me if you want better accuracy or have audio files with longer duration.
     ''')
 
