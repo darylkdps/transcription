@@ -90,7 +90,7 @@ file = st.file_uploader('Upload an audio file', type=['mp3', 'aac', 'wav'])
 def test_cache(file, model_size):
     if file is not None:
         # Print diagnostics message; disable in production mode
-        st.write("First run. Cached in memory.")
+        # st.write("First run. Cached in memory.")
 
         # Get file extension
         file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
