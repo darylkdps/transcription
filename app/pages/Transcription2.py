@@ -146,6 +146,7 @@ if file is not None and transcript_text != '':
     st.success('Transcribed.')
 
     # Display preview of transcript
+    preview_message = f'Previewing first {preview_length} segments of transcript.'
     st.text(preview_message)
     st.text(transcript_text_preview)
     
