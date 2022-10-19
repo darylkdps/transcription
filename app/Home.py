@@ -157,8 +157,8 @@ if file is not None and transcript_text != '':
 
     # Display preview of transcript
     preview_message = f'Previewing first {preview_length} segments of transcript.'
-    st.text(preview_message)
-    st.text(transcript_text_preview)
+    st.markdown(preview_message)
+    st.markdown(transcript_text_preview)
     
     # Display a file download button to download completed transcript
     st.download_button(
