@@ -3,7 +3,6 @@ import pywhisper
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from datetime import timedelta
-import time
 
 # Set configuration
 st.set_page_config(
@@ -18,8 +17,6 @@ st.set_page_config(
         }
     )
 
-
-
 # Display title
 st.title(
     '''Transcribe or Translate an Audio Recording'''
@@ -29,8 +26,8 @@ st.title(
 st.markdown(
     '''
     This web application uses Open AI's _Whisper_ to automatically transcribe or translate
-    audio recordings. _Whisper_ is a neural network (i.e., very very big) based automatic
-    speech recognition system. It offers five levels of speed-accuracy performance:
+    audio recordings. _Whisper_ is a neural network based automatic speech recognition
+    system. It offers five levels of speed-accuracy performance:
     - Faster
     - Fast
     - Balanced
@@ -39,14 +36,11 @@ st.markdown(
     
     I am using a free Streamlit plan. The plan provides very limited memory so only the models
     with small memory footprint can be loaded. Exceeding the memory allocated will crash this
-    application so I have limited the models that can be used.
+    application so I have limited the models and the size of the audio files that can be used.
 
-    __Do not use with audio recordings over 30 mins. There will not be enough memory.__ 
-    Contact me if you want better accuracy or have audios with longer duration.
+    __Do not use with audio recordings over 30 mins.__ I have not tested if it will crash. 
     
-    
-
-
+    Contact me if you want better accuracy or have audio files with longer duration.
     ''')
 
 # Map selections to Whisper models
@@ -59,11 +53,11 @@ performance_options = {
     }
 
 performance_description = {
-    'Faster': ' (audio duration / 2)',
-    'Fast': ' (audio duration)',
-    'Balanced': ' (audio duration x 2)',
+    'Faster': '(audio duration / 2)',
+    'Fast': '(audio duration)',
+    'Balanced': '(audio duration x 2)',
     'Accurate': '',
-    'More Accurate': ' ',
+    'More Accurate': '',
     }
 
 # Set default Whisper model size
@@ -75,7 +69,7 @@ performance = st.radio(
     options=('Faster', 'Fast'),
     index=1,
     key='per_radio_input',
-    format_func=lambda label: label + performance_description[label],
+    format_func=lambda label: f"{label:<6} {performance_description[label]:<21}",
     disabled=False,
     horizontal=False,
     label_visibility='visible'  # visible, hidden, collapsed
@@ -90,15 +84,11 @@ with placeholder.container():
 # Display a file uploader
 file = st.file_uploader('Upload an audio file', type=['mp3', 'aac', 'wav'])
 
-# if file is not None:
-#     file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
-    # st.audio(file.read(), format='audio/' + file_extension, start_time=0)
-
 @st.cache(allow_output_mutation=True, show_spinner=True, suppress_st_warning=True, ttl=600)
 def test_cache(file, model_size):
     if file is not None:
         # Print diagnostics message
-        st.write("Cached in memory.")
+        st.write("First run. Cached in memory.")
 
         # Get file extension
         file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
