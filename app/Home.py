@@ -11,9 +11,10 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state='collapsed',
     menu_items={
-        'About': 
-        '''This is developed by Daryl Ku (Research Associate), Academic Quality Unit, Office
-        of Strategic Planning and Academic Quality (SPAQ), NIE'''
+        'About': '''This is developed by Daryl Ku (Research Associate), Academic Quality Unit,
+        Office of Strategic Planning and Academic Quality (SPAQ), NIE''',
+        'Report a Bug': None,
+        'Get help': None
         }
     )
 
