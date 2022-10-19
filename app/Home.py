@@ -51,17 +51,25 @@ preview_length = 5
 # Map selections to Whisper models
 performance_options = {
     'Faster': 'tiny',
+    'Faster - English Only': 'tiny.en',
     'Fast': 'base',
+    'Fast - English Only': 'base.en',
     'Balanced': 'small',
+    'Balanced - English Only': 'small.en',
     'Accurate': 'medium',
+    'Accurate - English Only': 'medium.en',
     'More Accurate': 'large',
     }
 
 performance_description = {
     'Faster': '(duration / 2)',
+    'Faster - English Only': '(duration / 2)',
     'Fast': '(duration)',
+    'Fast - English Only': '(duration)',
     'Balanced': '(duration x 2)',
+    'Balanced - English Only': '(duration x 2)',
     'Accurate': '',
+    'Accurate - English Only': '',
     'More Accurate': '',
     }
 
@@ -69,12 +77,14 @@ performance_description = {
 model_size = performance_options['Fast']
 
 # Display radio box
+max_len_perf_opt = max(list(map(len, performance_options.keys())))
+max_len_perf_desc = max(list(map(len, performance_description.values())))
 performance = st.radio(
     'Select performance: (approximate processing time in brackets)',
-    options=('Faster', 'Fast'),
+    options=('Faster - English Only', 'Fast - English Only'),
     index=1,
     key='per_radio_input',
-    format_func=lambda label: f"{label:<6} {performance_description[label]:<21}",
+    format_func=lambda label: label.ljust(max_len_perf_opt) + performance_description[label],  # padding does not work here
     disabled=False,
     horizontal=False,
     label_visibility='visible'  # visible, hidden, collapsed
@@ -114,7 +124,7 @@ def test_cache(file, model_size):
 
             # Load whisper model and transcribe
             DEVICE = 'cpu'  # 'cuda' if torch.cuda.is_available() else 'cpu'
-            transcribe_message = f'No GPU acceleration, transcribing using CPU ...' if DEVICE == 'cpu' else f'Transcribing using GPU ...'
+            transcribe_message = f'No GPU acceleration 😢, transcribing using CPU ...' if DEVICE == 'cpu' else f'Transcribing using GPU ...'
             with st.spinner(transcribe_message):
                 model = pywhisper.load_model(model_size, device=DEVICE)
                 result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False)
@@ -170,3 +180,6 @@ if file is not None and transcript_text != '':
         mime='text/srt'
         )
     st.caption('Transcript is formatted in the subtitle format. Can be opened using any text editor.', unsafe_allow_html=False)
+
+    # Disable radio
+    performance.disabled = True
