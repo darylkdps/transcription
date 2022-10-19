@@ -85,7 +85,7 @@ with placeholder.container():
     # st.write(model_size)
 
 # Display a file uploader
-file = st.file_uploader('Upload an audio file', type=['mp3', 'aac', 'wav', 'mp4'])
+file = st.file_uploader('Upload an audio or video file', type=['mp3', 'aac', 'wav', 'mp4'])
 if file is not None:
     # Get file extension
     file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
