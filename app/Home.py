@@ -90,8 +90,11 @@ if file is not None:
     # Get file extension
     file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
 
-    # Display an audio player
-    st.audio(file.read(), format='audio/' + file_extension, start_time=0)
+    # Display an audio/video player
+    if file_extension == 'mp4':
+        st.video(file.read(), format='video/' + file_extension, start_time=0)
+    else:
+        st.audio(file.read(), format='audio/' + file_extension, start_time=0)
 
 @st.cache(allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=600)
 def test_cache(file, model_size):
