@@ -77,7 +77,7 @@ performance_description = {
 model_size = performance_options['Fast']
 
 # Set session state
-st.session_state['radio_perf_disabled'] = False
+st.session_state['temp'] = False
 
 # Display radio box
 max_len_perf_opt = max(list(map(len, performance_options.keys())))
@@ -88,7 +88,7 @@ performance = st.radio(
     index=1,
     key='per_radio_input',
     format_func=lambda label: label.ljust(max_len_perf_opt) + performance_description[label],  # padding does not work here
-    disabled=st.session_state['radio_perf_disabled'],
+    disabled=False,
     horizontal=False,
     label_visibility='visible'  # visible, hidden, collapsed
     )
@@ -160,8 +160,6 @@ def test_cache(file, model_size):
             if index < preview_length:
                 transcript_text_preview = transcript_text
             
-        st.session_state['radio_perf_disabled'] = True
-
         return file, transcript_text, transcript_text_preview
     else:
         return None, None, None
