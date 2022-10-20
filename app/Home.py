@@ -168,7 +168,7 @@ audio, transcript_text, transcript_text_preview = test_cache(file, model_size)
 
 if file is not None and transcript_text != '':
     # Display 'success' status
-    st.success('Transcribed.')
+    st.success('Transcribed. Full transcript can be downloaded below.')
 
     # Display preview of transcript
     preview_message = f'Previewing first {preview_length} segments of transcript.'
