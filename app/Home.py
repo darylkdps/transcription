@@ -50,13 +50,13 @@ preview_length = 5
 
 # Map selections to Whisper models
 performance_options = {
-    'Faster': 'tiny',
-    'Faster - English Only': 'tiny.en',
-    'Fast': 'base',
-    'Fast - English Only': 'base.en',
-    'Balanced': 'small',
+    'Faster':                  'tiny.en',
+    'Faster - English Only':   'tiny.en',
+    'Fast':                    'base.en',
+    'Fast - English Only':     'base.en',
+    'Balanced':                'small.en',
     'Balanced - English Only': 'small.en',
-    'Accurate': 'medium',
+    'Accurate':                'medium.en',
     'Accurate - English Only': 'medium.en',
     'More Accurate': 'large',
     }
@@ -84,7 +84,7 @@ max_len_perf_opt = max(list(map(len, performance_options.keys())))
 max_len_perf_desc = max(list(map(len, performance_description.values())))
 performance = st.radio(
     'Select performance: (approximate processing time in brackets)',
-    options=('Faster - English Only', 'Fast - English Only'),
+    options=('Faster', 'Fast'),
     index=1,
     key='per_radio_input',
     format_func=lambda label: label.ljust(max_len_perf_opt) + performance_description[label],  # padding does not work here
