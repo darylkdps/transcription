@@ -7,3 +7,7 @@ runOnSave = true
 # Max size, in megabytes, for files uploaded with the file_uploader.
 # Default: 200
 maxUploadSize = 50
+
+[theme]
+
+base="dark"
