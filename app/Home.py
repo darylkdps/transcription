@@ -3,6 +3,7 @@ import pywhisper
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from datetime import timedelta
+from datetime import datetime
 
 # Set configuration
 st.set_page_config(
@@ -165,11 +166,25 @@ def test_cache(file, model_size):
     else:
         return None, None, None
 
+def timedelta_to_hr_min_sec(td):
+    _hr = td.seconds // 60 // 60 # hour
+    _min = (td.seconds // 60) - (_hr * 60)
+    _sec = (td.seconds) - (_hr * 60 * 60)  - (_min * 60)
+    
+    _time = ''
+    _time = _time + str(_hr) + ' hour ' if _hr != 0 else _time
+    _time = _time + str(_min) + ' min '
+    _time = _time + str(_sec) + ' sec'    
+    return _time
+
+time_start = datetime.now()
 audio, transcript_text, transcript_text_preview = test_cache(file, model_size)
+time_end = datetime.now()
+time_taken = timedelta_to_hr_min_sec(time_end - time_start)
 
 if file is not None and transcript_text != '':
     # Display 'success' status
-    st.success('Transcribed. Full transcript can be downloaded below.')
+    st.success('Transcribed in ' + time_taken '. Full transcript can be downloaded below.')
 
     # Display preview of transcript
     preview_message = f'Previewing first {preview_length} segments of transcript.'
