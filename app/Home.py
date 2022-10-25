@@ -62,15 +62,15 @@ performance_options = {
     }
 
 performance_description = {
-    'Faster': '(duration / 2)',
-    'Faster - English Only': '(duration / 2)',
-    'Fast': '(duration)',
-    'Fast - English Only': '(duration)',
-    'Balanced': '(duration x 2)',
-    'Balanced - English Only': '(duration x 2)',
-    'Accurate': '',
-    'Accurate - English Only': '',
-    'More Accurate': '',
+    'Faster': '(media length x 0.5)',
+    'Faster - English Only': '(media length x 0.5)',
+    'Fast': '(media length)',
+    'Fast - English Only': '(media length)',
+    'Balanced': '(media length x 2)',
+    'Balanced - English Only': '(media length x 2)',
+    'Accurate': '(media length x ?)',
+    'Accurate - English Only': '(media length x ?)',
+    'More Accurate': '(media length x ?)',
     }
 
 # Set default Whisper model size
@@ -111,7 +111,7 @@ if file is not None:
     else:
         st.audio(file.read(), format='audio/' + file_extension, start_time=0)
 
-@st.cache(allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=600)
+@st.cache(allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=3600)
 def test_cache(file, model_size):
     if file is not None:
         # Print diagnostics message; disable in production mode
