@@ -113,8 +113,8 @@ if file is not None:
     else:
         st.audio(file.read(), format='audio/' + file_extension, start_time=0)
 
-@st.cache(persist=False, allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=3600)
-def test_cache(file, model_size):
+@st.cache(persist=False, allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=1800)
+def transcribe_media(file, model_size):
     if file is not None:
         # Print diagnostics message; disable in production mode
         # st.write("First run. Cached in memory.")
@@ -178,7 +178,7 @@ def timedelta_to_hr_min_sec(td):
     return _time
 
 time_start = datetime.now()
-audio, transcript_text, transcript_text_preview = test_cache(file, model_size)
+audio, transcript_text, transcript_text_preview = transcribe_media(file, model_size)
 time_end = datetime.now()
 time_taken = timedelta_to_hr_min_sec(time_end - time_start)
 
