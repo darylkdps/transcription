@@ -42,7 +42,8 @@ st.markdown(
     the audio and video files that can be used.
 
     __Do not use with audio or video files over 30 mins in duration.__ I have not tested if it
-    will crash. Contact me if you want better accuracy or have files with longer duration.
+    will crash or automatically reset. Contact me if you want better accuracy or have files
+    with longer duration.
     ''')
 
 # Set transcription preview length in segments 
