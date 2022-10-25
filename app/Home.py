@@ -184,7 +184,7 @@ time_taken = timedelta_to_hr_min_sec(time_end - time_start)
 
 if file is not None and transcript_text != '':
     # Display 'success' status
-    st.success('Transcribed in ' + time_taken '. Full transcript can be downloaded below.')
+    st.success('Transcribed in ' + time_taken + '. Full transcript can be downloaded below.')
 
     # Display preview of transcript
     preview_message = f'Previewing first {preview_length} segments of transcript.'
