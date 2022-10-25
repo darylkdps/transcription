@@ -111,7 +111,7 @@ if file is not None:
     else:
         st.audio(file.read(), format='audio/' + file_extension, start_time=0)
 
-@st.cache(allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=3600)
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False, suppress_st_warning=True, ttl=3600)
 def test_cache(file, model_size):
     if file is not None:
         # Print diagnostics message; disable in production mode
