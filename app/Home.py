@@ -8,7 +8,7 @@ from datetime import datetime
 # Set configuration
 st.set_page_config(
     page_title="Daryl's Transcription Web App",
-    page_icon='🎤🎤',
+    page_icon='🎧',
     layout='centered',
     initial_sidebar_state='collapsed',
     menu_items={
