@@ -28,23 +28,19 @@ st.title(
 # Display instructions
 st.markdown(
     '''
-    This web application uses Open AI's _Whisper_ to automatically transcribe or translate (WIP)
-    speech. _Whisper_ is a neural network based automatic speech recognition system. It offers
-    five levels of speed-accuracy performance:
+    This web application uses Open AI's _Whisper_ to automatically transcribe or translate speech. _Whisper_ is a 
+    neural network based automatic speech recognition system. It offers five levels of speed-accuracy performance:
     - Faster
     - Fast
     - Balanced
     - Accurate
     - More Accurate
     
-    I am using a free Streamlit plan to host this web application. The plan provides very
-    limited memory so only the models with small memory footprint can be loaded. Exceeding the
-    memory allocated will crash this application so I have restricted the models and the size of
-    the audio and video files that can be used.
+    I am using a free Streamlit plan to host this web application. The plan provides very limited memory so only the 
+    models with small memory footprint can be loaded. Exceeding the memory allocated will crash this application so I 
+    have restricted the models and the size of the audio and video files that can be used.
 
-    __Do not use with audio or video files over 30 mins in duration.__ I have not tested if it
-    will crash or automatically reset. Contact me if you want better accuracy or have files
-    with longer duration.
+    TL:DR: App will crash if memory exceeded. Contact me if you want better accuracy or have big files.
     ''')
 
 # Set transcription preview length in segments 
@@ -132,7 +128,8 @@ def transcribe_media(file, model_size):
             transcribe_message = f'No GPU acceleration 😢, transcribing using CPU ...' if DEVICE == 'cpu' else f'Transcribing using GPU ...'
             with st.spinner(transcribe_message):
                 model = pywhisper.load_model(model_size, device=DEVICE)
-                result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False)
+                #result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False)
+                result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False, task='translate', language='en')
 
         # Extract transcript from segments
         transcript_text = ''
