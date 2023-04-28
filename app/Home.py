@@ -48,13 +48,13 @@ preview_length = 5
 
 # Map selections to Whisper models
 performance_options = {
-    'Faster':                  'tiny.en',
+    'Faster':                  'tiny',
     'Faster - English Only':   'tiny.en',
-    'Fast':                    'base.en',
+    'Fast':                    'base',
     'Fast - English Only':     'base.en',
-    'Balanced':                'small.en',
+    'Balanced':                'small',
     'Balanced - English Only': 'small.en',
-    'Accurate':                'medium.en',
+    'Accurate':                'medium',
     'Accurate - English Only': 'medium.en',
     'More Accurate': 'large',
     }
