@@ -28,8 +28,9 @@ st.title(
 # Display instructions
 st.markdown(
     '''
-    This web application uses Open AI's _Whisper_ to automatically transcribe or translate speech. _Whisper_ is a 
-    neural network based automatic speech recognition system. It offers five levels of speed-accuracy performance:
+    This web application uses Open AI's _Whisper_ to automatically transcribe or translate (to English) speech. 
+    _Whisper_ is a neural network based automatic speech recognition system. It offers five levels of speed-accuracy 
+    performance:
     - Faster
     - Fast
     - Balanced
@@ -129,7 +130,7 @@ def transcribe_media(file, model_size):
             with st.spinner(transcribe_message):
                 model = pywhisper.load_model(model_size, device=DEVICE)
                 #result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False)
-                result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False, task='translate', language='en')
+                result = model.transcribe(audio=tempFile.name, verbose=False, fp16=False, task='translate')
 
         # Extract transcript from segments
         transcript_text = ''
