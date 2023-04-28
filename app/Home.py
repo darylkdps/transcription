@@ -40,7 +40,7 @@ st.markdown(
     models with small memory footprint can be loaded. Exceeding the memory allocated will crash this application so I 
     have restricted the models and the size of the audio and video files that can be used.
 
-    TL:DR: App will crash if memory exceeded. Contact me if you want better accuracy or have big files.
+    tl;dr: App will crash if memory exceeded. Contact me if you want better accuracy or have big files.
     ''')
 
 # Set transcription preview length in segments 
