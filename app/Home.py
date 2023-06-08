@@ -28,7 +28,7 @@ st.title(
 # Display instructions
 st.markdown(
     '''
-    This web application uses Open AI's _Whisper_ to automatically transcribe or translate (to English) speech. 
+    This web application uses Open AI's _Whisper_ to automatically transcribe or translate (WIP) speech. 
     _Whisper_ is a neural network based automatic speech recognition system. It offers five levels of speed-accuracy 
     performance:
     - Faster
