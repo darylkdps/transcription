@@ -44,7 +44,7 @@ st.markdown(
     tl;dr: App will crash if memory exceeded. Contact me if you want better accuracy or have big files.
     ''')
 
-# Set transcription preview length in segments 
+# Set transcription preview length in segments
 preview_length = 5
 
 # Map selections to Whisper models
@@ -99,7 +99,7 @@ with placeholder.container():
     # st.write(model_size)
 
 # Display a file uploader
-file = st.file_uploader('Upload an audio or video file', type=['mp3', 'aac', 'wav', 'mp4'])
+file = st.file_uploader('Upload an audio or video file', type=['mp3', 'aac', 'wav', 'mp4', 'm4a'])
 if file is not None:
     # Get file extension
     file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
@@ -118,7 +118,7 @@ def transcribe_media(file, model_size):
 
         # Get file extension
         file_extension = Path(file.name).suffix[1:]  # Path(file.name).suffix returns with dot, i.e., '.wav'
-        
+
         # Write uploaded file to temp storage
         with NamedTemporaryFile(suffix=file_extension) as tempFile:
             tempFile.write(file.getvalue())  # copy value of uploaded file to temporarily created file
@@ -159,7 +159,7 @@ def transcribe_media(file, model_size):
 
             if index < preview_length:
                 transcript_text_preview = transcript_text
-            
+
         return file, transcript_text, transcript_text_preview
     else:
         return None, None, None
@@ -168,11 +168,11 @@ def timedelta_to_hr_min_sec(td):
     _hr = td.seconds // 60 // 60 # hour
     _min = (td.seconds // 60) - (_hr * 60)
     _sec = (td.seconds) - (_hr * 60 * 60)  - (_min * 60)
-    
+
     _time = ''
     _time = _time + str(_hr) + ' hour ' if _hr != 0 else _time
     _time = _time + str(_min) + ' min '
-    _time = _time + str(_sec) + ' sec'    
+    _time = _time + str(_sec) + ' sec'
     return _time
 
 time_start = datetime.now()
@@ -188,7 +188,7 @@ if file is not None and transcript_text != '':
     preview_message = f'Previewing first {preview_length} segments of transcript.'
     st.text(preview_message)
     st.text(transcript_text_preview)
-    
+
     # Display a file download button to download completed transcript
     st.download_button(
         label='Download Transcript',
